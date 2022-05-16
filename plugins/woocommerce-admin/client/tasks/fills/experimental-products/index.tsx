@@ -4,7 +4,6 @@
 import { __ } from '@wordpress/i18n';
 import {
 	WooOnboardingTask,
-	useProductTaskExperiment,
 } from '@woocommerce/onboarding';
 import { Text } from '@woocommerce/experimental';
 import { registerPlugin } from '@wordpress/plugins';
@@ -27,6 +26,7 @@ import { LoadSampleProductType } from './constants';
 import LoadSampleProductModal from '../components/load-sample-product-modal';
 import useLoadSampleProducts from '../components/use-load-sample-products';
 import useRecordCompletionTime from '../use-record-completion-time';
+import {useProductTaskExperiment} from "./use-product-layout-experiment";
 
 const getOnboardingProductType = (): string[] => {
 	const onboardingData = getAdminSetting( 'onboarding' );
@@ -53,10 +53,10 @@ const ViewControlButton: React.FC< {
 
 export const Products = () => {
 	const [ isExpanded, setIsExpanded ] = useState< boolean >( false );
-	const [
-		isLoadingExperiment,
+	const { 
+		isLoading: isLoadingExperiment,
 		experimentLayout,
-	] = useProductTaskExperiment();
+	 } = useProductTaskExperiment();
 
 	const surfacedProductTypeKeys = getSurfacedProductTypeKeys(
 		getOnboardingProductType()
@@ -77,7 +77,7 @@ export const Products = () => {
 					recordCompletionTime();
 				},
 			} ) ),
-		[ recordCompletionTime ]
+		[ recordCompletionTime, productTypes ]
 	);
 
 	const {
@@ -113,7 +113,7 @@ export const Products = () => {
 	}, [
 		surfacedProductTypeKeys,
 		isExpanded,
-		productTypes,
+		productTypesWithTimeRecord,
 		experimentLayout,
 		loadSampleProduct,
 	] );
@@ -158,13 +158,21 @@ export const Products = () => {
 	);
 };
 
+const ExperimentalProductsFill = () => {
+	const { 
+		isLoading,
+		experimentLayout,
+	 } = useProductTaskExperiment();
+
+	return isLoading ? null : (
+		<WooOnboardingTask id="products" variant={ experimentLayout }>
+			<Products />
+		</WooOnboardingTask>
+	);
+};
+
 registerPlugin( 'wc-admin-onboarding-task-products', {
 	// @ts-expect-error 'scope' does exist. @types/wordpress__plugins is outdated.
 	scope: 'woocommerce-tasks',
-	render: () => (
-		// @ts-expect-error WooOnboardingTask is a pure JS component.
-		<WooOnboardingTask id="products">
-			<Products />
-		</WooOnboardingTask>
-	),
+	render: () => <ExperimentalProductsFill />,
 } );

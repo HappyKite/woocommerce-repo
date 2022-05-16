@@ -3,7 +3,6 @@
  */
 import { render, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { useProductTaskExperiment } from '@woocommerce/onboarding';
 import { recordEvent } from '@woocommerce/tracks';
 
 /**
@@ -12,6 +11,7 @@ import { recordEvent } from '@woocommerce/tracks';
 import { Products } from '../';
 import { defaultSurfacedProductTypes, productTypes } from '../constants';
 import { getAdminSetting } from '~/utils/admin-settings';
+import { useProductTaskExperiment } from '../use-product-layout-experiment';
 
 jest.mock( '@wordpress/data', () => ( {
 	...jest.requireActual( '@wordpress/data' ),
