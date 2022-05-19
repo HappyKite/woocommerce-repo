@@ -72,7 +72,7 @@ class Controller extends \Automattic\WooCommerce\Admin\API\Reports\Controller {
 			$args['customer_type'] = $request['customer'];
 		}
 
-		return $args;
+		return apply_filters( 'woocommerce_analytics_orders_stats_prepare_reports_query', $args, $request );
 	}
 
 	/**
@@ -571,6 +571,6 @@ class Controller extends \Automattic\WooCommerce\Admin\API\Reports\Controller {
 			),
 		);
 
-		return $params;
+		return apply_filters('woocommerce_analytics_orders_stats_collection_params', $params);
 	}
 }

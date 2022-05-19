@@ -54,7 +54,7 @@ class Controller extends ReportsController implements ExportableInterface {
 		$args['status_is']         = (array) $request['status_is'];
 		$args['status_is_not']     = (array) $request['status_is_not'];
 
-		return $args;
+		return apply_filters( 'woocommerce_analytics_categories_prepare_reports_query', $args, $request );
 	}
 
 	/**
@@ -317,7 +317,7 @@ class Controller extends ReportsController implements ExportableInterface {
 			'validate_callback' => 'rest_validate_request_arg',
 		);
 
-		return $params;
+		return apply_filters( 'woocommerce_analytics_categories_collection_params', $params );
 	}
 
 	/**

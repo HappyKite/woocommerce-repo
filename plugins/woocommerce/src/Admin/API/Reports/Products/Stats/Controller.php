@@ -426,6 +426,6 @@ class Controller extends \WC_REST_Reports_Controller {
 			),
 		);
 
-		return $params;
+		return apply_filters('woocommerce_analytics_products_stats_collection_params', $params);
 	}
 }

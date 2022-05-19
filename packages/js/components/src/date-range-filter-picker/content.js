@@ -41,7 +41,8 @@ class DatePickerContent extends Component {
 	}
 
 	isFutureDate( dateString ) {
-		return moment().isBefore( moment( dateString ), 'day' );
+		// return moment().isBefore( moment( dateString ), 'day' );
+		return false;
 	}
 
 	render() {

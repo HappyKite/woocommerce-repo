@@ -525,7 +525,7 @@ class DataStore extends ReportsDataStore implements DataStoreInterface {
 			$order
 		);
 
-		$format = array(
+		$format = apply_filters( 'woocommerce_analytics_update_order_stats_data_format', array(
 			'%d',
 			'%d',
 			'%s',
@@ -538,7 +538,9 @@ class DataStore extends ReportsDataStore implements DataStoreInterface {
 			'%s',
 			'%d',
 			'%d',
-		);
+			'%s',
+			'%s'
+		) );
 
 		if ( 'shop_order_refund' === $order->get_type() ) {
 			$parent_order = wc_get_order( $order->get_parent_id() );

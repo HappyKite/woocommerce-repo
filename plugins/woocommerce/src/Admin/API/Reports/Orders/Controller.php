@@ -67,7 +67,7 @@ class Controller extends ReportsController implements ExportableInterface {
 		$args['attribute_is']       = (array) $request['attribute_is'];
 		$args['attribute_is_not']   = (array) $request['attribute_is_not'];
 
-		return $args;
+		return apply_filters( 'woocommerce_analytics_orders_prepare_reports_query', $args, $request );
 	}
 
 	/**
@@ -480,7 +480,7 @@ class Controller extends ReportsController implements ExportableInterface {
 			'validate_callback' => 'rest_validate_request_arg',
 		);
 
-		return $params;
+		return apply_filters('woocommerce_analytics_orders_collection_params', $params);
 	}
 
 	/**

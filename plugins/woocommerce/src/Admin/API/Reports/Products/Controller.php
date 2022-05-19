@@ -346,7 +346,7 @@ class Controller extends \WC_REST_Reports_Controller implements ExportableInterf
 			'validate_callback' => 'rest_validate_request_arg',
 		);
 
-		return $params;
+		return apply_filters('woocommerce_analytics_products_collection_params', $params);
 	}
 
 	/**
